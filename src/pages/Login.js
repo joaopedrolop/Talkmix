@@ -9,7 +9,5 @@ export default function Login() {
 
   const navigation = useNavigation();
 
-  return (
 
-  );
 }
