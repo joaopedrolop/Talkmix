@@ -47,7 +47,7 @@
       1. JavaScript;
       2. React native.
    4. _Banco de dados:_
-      1. SQLite.
+      1. MySQL
 7. **Restrições:**
    1. Priorizar funções básicas;
    2. Funcionalidades mais complexas serão deixadas de lado.
