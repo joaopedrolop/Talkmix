@@ -7,7 +7,7 @@
 2. **Objetivo:**
    1. Desenvolver uma aplicação mobile para comentar sobre livros (apresentando os livros junto de uma sinopse e possibilitando um acompanhamento de uma meta de leitura e de gêneros mais lidos) e esporte (apresentando resultados de jogos e informações sobre times e jogadores).
 3. **Responsáveis:**
-   1. Isabela (P.O. - Full-stack);
+   1. Isabela (P.O.-Full-stack);
    2. Rafaela (Front-end);
    3. Heloá (Front-end);
    4. J.P. Lopes (Back-end);
