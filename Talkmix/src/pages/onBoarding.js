@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Pressable, Text, TouchableOpacity, View } from 'react-native';
 
 //Importa o Styles
-import { styles } from "../Styles/styles";
+import { styles } from "../styles/styles";
 
 import { useNavigation } from '@react-navigation/native';
 
