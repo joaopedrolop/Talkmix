@@ -16,7 +16,65 @@ export default function CadastroScreen() {
   const [senha, setSenha] = useState('');
   const [confirmarsenha, setConfimarsenha] = useState('');
 
+  // Validação Nome
+  const validaNome = () => {
+    const nomeRegex = /^[A-Zz-À-ÿ\s]+$/; // Não permite numeros no campo de nome.
+    return nomeRegex.test(nome.value);
+  };
+
+  // Validação Sobrenome
+  const validaSobrenome = () => {
+    const nomeRegex = /^[A-Zz-À-ÿ\s]+$/; // Não permite numeros no campo de sobrenome.
+    return nomeRegex.test(sobrenome.value);
+  };
+
+
+  // Validação E-mail
+  // const validaEmail = (email) => {
+  //   const partesEmail = email.split("@");
+
+  //   if (
+  //     (partesEmail.length === 2 &&
+  //       partesEmail[1].toLowerCase() === "gmail.com") ||
+  //     (partesEmail.length === 2 &&
+  //       partesEmail[1].toLowerCase() === "outlook.com") ||
+  //     (partesEmail.length === 2 &&
+  //       partesEmail[1].toLowerCase() === "hotmail.com")
+  //   ) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // };
+
+  // Verificação Força da Senha
+  // const verificaSenha = (senha) => {
+  //   if (!/[a-z]/.test(senha)) { // Verifica se a senha tem letras minúsculas
+  //     return "A senha deve ter pelo menos uma letra minúscula!";
+  //   }
+  //   if (!/[A-Z]/.test(senha)) { // Verifica se a senha tem letras maiúsculas
+  //     return "A senha deve ter pelo menos uma letra maiúscula!";
+  //   }
+  //   if (!/[\W_]/.test(senha)) { // Verifica se a senha tem caractere especial
+  //     return "A senha deve ter pelo menos um caractere especial!";
+  //   }
+  //   if (!/\d/.test(senha)) { // Verifica se a senha tem números
+  //     "A senha deve ter pelo menos um número!";
+  //   }
+  //   if (senha.length < 8) { // Verifica se a senha tem 8 caracteres
+  //     return "A senha deve ter pelo menos 8 caracteres";
+  //   }
+
+  //   return null;
+  // }
+
+  // Verifica Igualdade das Senhas
+  // const validaIgualdadeSenha = () => {
+  //   return senha.value === confirmarsenha.value ? true : false;
+  // }
+
   const Obrigatorio = async () => {
+    // Verificação dos dados
     if (nome.trim() === '' ||
       sobrenome.trim() === '' ||
       email.trim() === '' ||
@@ -25,9 +83,29 @@ export default function CadastroScreen() {
       alert('Este campo é obrigatório preencha-o para continuar!');
       return;
     }
+    // Verificação Nome
+    if (!validaNome) {
+      alert("O nome não pode conter números ou caracteres especiais.")
+      return;
+    }
+    // Verificação Sobrenome
+    if (!validaSobrenome) {
+
+      return "O sobrenome não pode conter números ou caracteres especiais."
+    }
+    // Verificação E-mail
+    // if (!validaEmail) {
+
+    // }
+
+
+
     await setItem('login', 'logada')
     navigation.navigate("Login")
   };
+
+
+
 
   return (
     <View>
@@ -48,7 +126,7 @@ export default function CadastroScreen() {
         </TouchableOpacity>
 
         <View style={styles.txt}>
-          <Text Text > já tem uma conta? </Text>
+          <Text Text > Já tem uma conta? </Text>
           <Pressable onPress={() => navigation.navigate("Login")}><Text style={{ fontWeight: 'bold', color: "#CC0000" }}>Faça Login!</Text></Pressable>
         </View>
 
