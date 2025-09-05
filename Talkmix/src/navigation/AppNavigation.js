@@ -9,6 +9,7 @@ import OnBoardingScreen from '../Screens/OnBoardingScreen';
 import CadastroScreen from '../Screens/CadastroScreen';
 import LoginScreen from '../Screens/LoginScreen';
 import HomeScreen from '../Screens/HomeScreen';
+import BibliotecaScreen from '../Screens/BbliotecaScreen';
 
 import { getItem } from "../components/AsyncStorage";
 
@@ -43,6 +44,7 @@ export default function AppNavigation() {
           <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Biblioteca" component={BibliotecaScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     )
@@ -54,6 +56,7 @@ export default function AppNavigation() {
           <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Biblioteca" component={BibliotecaScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     )
