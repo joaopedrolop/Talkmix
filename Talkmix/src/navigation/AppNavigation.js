@@ -43,7 +43,7 @@ export default function AppNavigation() {
           <Stack.Screen name="OnBoarding" component={OnBoarding} options={{ headerShown: false }} />
           <Stack.Screen name="Cadastro" component={Cadastro} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-          <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+          <Stack.Screen name="Home" component={Dashboard} options={{ headerShown: false }} />
           <Stack.Screen name="Biblioteca" component={Biblioteca} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
@@ -55,7 +55,7 @@ export default function AppNavigation() {
           <Stack.Screen name="OnBoarding" component={OnBoarding} options={{ headerShown: false }} />
           <Stack.Screen name="Cadastro" component={Cadastron} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-          <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+          <Stack.Screen name="Home" component={Dashboard} options={{ headerShown: false }} />
           <Stack.Screen name="Biblioteca" component={Biblioteca} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
