@@ -1,4 +1,4 @@
-//implementação das bibliotecas
+//implementação das bibliotecas 
 const express = require("express");
 const mysql = require("mysql2");
 const session = require("express-session");
@@ -8,17 +8,14 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const jwt = reqire("jsonwebtoken");
 
-<<<<<<< HEAD
-=======
 const PORT = 3306;
 const app = express(); 
 
->>>>>>> origin/lopes
 //configurar a conexão com o banco de dados Mysql
 const db = mysql.createConnections({
     host: 'localhost',
     user: 'phpmyadmin',
-    password: '123456789',
+    password: '123456789' ,
     database: 'mydb'
 });
 

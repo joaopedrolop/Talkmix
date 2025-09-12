@@ -1,14 +1,6 @@
 {
-  "name": "talkmix",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
-  },
   "dependencies": {
+<<<<<<< HEAD
     "@expo/metro-runtime": "~6.1.1",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-navigation/drawer": "^7.5.7",
@@ -27,4 +19,12 @@
     "@babel/core": "^7.20.0"
   },
   "private": true
+=======
+    "body-parser": "^2.2.0",
+    "express-session": "^1.18.2"
+   
+    
+    
+  }
+>>>>>>> origin/lopes
 }
