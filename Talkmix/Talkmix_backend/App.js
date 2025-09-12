@@ -1,27 +1,23 @@
 //implementação das bibliotecas 
 const express = require("express");
-const mysql = require("mysql2/promise");
+const mysql = require("mysql2");
 const session = require("express-session");
 const bodyParser = require('body-parser');
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const jwt = require("jsonwebtoken");
+const jwt = reqire("jsonwebtoken");
 
 const PORT = 3306;
 const app = express(); 
 
-dotenv.config();
-app.use(cors());
-app.use(express.json());
-
 //configurar a conexão com o banco de dados Mysql
-const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-})
+const db = mysql.createConnections({
+    host: 'localhost',
+    user: 'phpmyadmin',
+    password: '123456789' ,
+    database: 'mydb'
+});
 
 // middleware
 function autenticarToken(req, res, next) {
@@ -39,7 +35,7 @@ function autenticarToken(req, res, next) {
 
         req.user = user;
         next();
-    });
+   ls -l });
 }
 
 //Rota para o registro
@@ -70,20 +66,3 @@ app.post("/auth/register", async (req, res) => {
         res.status(500).json({ error: "Erro ao registrar usuario"})
     }
 });
-
-async function conexaoBd() {
-    try {
-        const conn = await pool.getConnection();
-        console.log("conexão com Mysql bem sucedida")
-        conn.release();
-    }catch(error){
-        console.log(`Error: ${error}`)
-    }
-}
-
-conexaoBd();
-
-// iniciar o banco de dados
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`)
-})
