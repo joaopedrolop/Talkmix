@@ -11,13 +11,17 @@ const jwt = require("jsonwebtoken");
 const PORT = 3306;
 const app = express();
 
+dotenv.config();
+app.use(cors());
+app.use(express.json());
+
 //configurar a conexão com o banco de dados Mysql
-const db = mysql.createConnections({
-    host: 'localhost',
-    user: 'phpmyadmin',
-    password: '123456789',
-    database: 'mydb'
-});
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+})
 
 // middleware
 function autenticarToken(req, res, next) {
