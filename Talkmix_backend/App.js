@@ -15,10 +15,6 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
-dotenv.config();
-app.use(cors());
-app.use(express.json());
-
 //configurar a conexão com o banco de dados Mysql
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
