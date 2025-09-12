@@ -1,6 +1,6 @@
 //implementação das bibliotecas
 const express = require("express");
-const mysql = require("mysql2");
+const mysql = require("mysql2/promise");
 const session = require("express-session");
 const bodyParser = require('body-parser');
 const bcrypt = require("bcrypt");
@@ -10,6 +10,10 @@ const jwt = require("jsonwebtoken");
 
 const PORT = 3306;
 const app = express();
+
+dotenv.config();
+app.use(cors());
+app.use(express.json());
 
 dotenv.config();
 app.use(cors());
@@ -70,3 +74,20 @@ app.post("/auth/register", async (req, res) => {
         res.status(500).json({ error: "Erro ao registrar usuario" })
     }
 });
+
+async function conexaoBd() {
+    try {
+        const conn = await pool.getConnection();
+        console.log("conexão com Mysql bem sucedida")
+        conn.release();
+    } catch (error) {
+        console.log(`Error: ${error}`)
+    }
+}
+
+conexaoBd();
+
+// iniciar o banco de dados
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`)
+})

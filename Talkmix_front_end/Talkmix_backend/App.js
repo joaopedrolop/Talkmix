@@ -35,7 +35,7 @@ function autenticarToken(req, res, next) {
 
         req.user = user;
         next();
-   ls -l });
+    });
 }
 
 //Rota para o registro
