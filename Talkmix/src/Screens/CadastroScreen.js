@@ -15,22 +15,41 @@ export default function CadastroScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarsenha, setConfimarsenha] = useState('');
+  const [nomeError, setNomeError] = useState('');
+  const [sobrenomeError, setSobrenomeError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [senhaError, setSenhaError] = useState('');
+  const [confirmarsenhaError, setConfirmarsenhaError] = useState('');
 
-  // Validação Nome
-  const validaNome = () => {
-    const nomeRegex = /^[A-Zz-À-ÿ\s]+$/; // Não permite numeros no campo de nome.
-    return nomeRegex.test(nome.value);
+  const validarNome = (value) => {
+    const regex = /^[A-Za-zÀ-ÿ\s]+$/;
+
+    if (!regex.test(value)) {
+      setNomeError("O nome não pode conter números ou caracteres especiais!");
+      return false;
+    } else {
+      setNomeError('');
+      setNome(value);
+      return true;
+    }
+
   };
 
-  // Validação Sobrenome
-  const validaSobrenome = () => {
-    const nomeRegex = /^[A-Zz-À-ÿ\s]+$/; // Não permite numeros no campo de sobrenome.
-    return nomeRegex.test(sobrenome.value);
+  const validarSobrenome = (value) => {
+    const regex = /^[A-Za-zÀ-ÿ\s]+$/;
+
+    if (!regex.test(value)) {
+      setSobrenomeError("O sobrenome não pode conter números ou caracteres especiais!")
+      return false
+    } else {
+      setSobrenomeError('');
+      setSobrenome(value);
+      return true
+    }
+
   };
 
-
-  // Validação E-mail
-  // const validaEmail = (email) => {
+  // const validarEmail = (value) => {
   //   const partesEmail = email.split("@");
 
   //   if (
@@ -41,37 +60,13 @@ export default function CadastroScreen() {
   //     (partesEmail.length === 2 &&
   //       partesEmail[1].toLowerCase() === "hotmail.com")
   //   ) {
-  //     return true;
+  //     setEmailError("Digite um E-mail valido!")
   //   } else {
-  //     return false;
+  //     setEmailError('')
   //   }
+  //   setEmail(value)
   // };
 
-  // Verificação Força da Senha
-  // const verificaSenha = (senha) => {
-  //   if (!/[a-z]/.test(senha)) { // Verifica se a senha tem letras minúsculas
-  //     return "A senha deve ter pelo menos uma letra minúscula!";
-  //   }
-  //   if (!/[A-Z]/.test(senha)) { // Verifica se a senha tem letras maiúsculas
-  //     return "A senha deve ter pelo menos uma letra maiúscula!";
-  //   }
-  //   if (!/[\W_]/.test(senha)) { // Verifica se a senha tem caractere especial
-  //     return "A senha deve ter pelo menos um caractere especial!";
-  //   }
-  //   if (!/\d/.test(senha)) { // Verifica se a senha tem números
-  //     "A senha deve ter pelo menos um número!";
-  //   }
-  //   if (senha.length < 8) { // Verifica se a senha tem 8 caracteres
-  //     return "A senha deve ter pelo menos 8 caracteres";
-  //   }
-
-  //   return null;
-  // }
-
-  // Verifica Igualdade das Senhas
-  // const validaIgualdadeSenha = () => {
-  //   return senha.value === confirmarsenha.value ? true : false;
-  // }
 
   const Obrigatorio = async () => {
     // Verificação dos dados
@@ -83,29 +78,25 @@ export default function CadastroScreen() {
       alert('Este campo é obrigatório preencha-o para continuar!');
       return;
     }
-    // Verificação Nome
-    if (!validaNome) {
-      alert("O nome não pode conter números ou caracteres especiais.")
+
+    if (!validarNome(nome)) {
+      alert('O nome não pode conter números ou caracteres especiais!');
       return;
     }
-    // Verificação Sobrenome
-    if (!validaSobrenome) {
 
-      return "O sobrenome não pode conter números ou caracteres especiais."
+    if (!validarSobrenome(sobrenome)) {
+      alert('O sobrenome não pode conter números ou caracteres especiais!');
+      return;
     }
-    // Verificação E-mail
-    // if (!validaEmail) {
 
+    // if (!validarEmail(email)) {
+    //   alert('Digite um E-mail valido!');
+    //   return;
     // }
-
-
 
     await setItem('login', 'logada')
     navigation.navigate("Login")
   };
-
-
-
 
   return (
     <View>
@@ -114,8 +105,8 @@ export default function CadastroScreen() {
         <Text style={styles.text}>Tenha um Conteúdo Diversificado para comentar sobre</Text>
 
         <View style={{ marginTop: 80 }}>
-          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Nome' value={nome} onChangeText={setNome} />
-          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Sobrenome' value={sobrenome} onChangeText={setSobrenome} />
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Nome' value={nome} onChangeText={validarNome} /> {nomeError ? <Text style={{ color: 'red' }}>{nomeError}</Text> : null}
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Sobrenome' value={sobrenome} onChangeText={validarSobrenome} /> {sobrenomeError ? <Text style={{ color: 'red' }}>{sobrenomeError}</Text> : null}
           <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='E-mail' value={email} onChangeText={setEmail} />
           <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Senha' value={senha} onChangeText={setSenha} />
           <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Confirmar Senha' value={confirmarsenha} onChangeText={setConfimarsenha} />
