@@ -18,12 +18,11 @@ export default function OnBoardingScreen() {
 
   const doneButton = ({ ...props }) => {
     return (
-      <TouchableOpacity style={styles.doneButton} {...props}>
+      <TouchableOpacity onPress={handleDone} style={styles.doneButton} {...props}>
         <Text>Done</Text>
       </TouchableOpacity>
     )
   }
-
   return (
     <View style={styles.container}>
       <Onboarding

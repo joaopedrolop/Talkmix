@@ -18,7 +18,7 @@ export default function LoginScreen() {
       return;
     }
     await setItem('login', 'logada')
-    navigation.navigate("Home")
+    navigation.navigate("Dashboard")
   };
 
   return (

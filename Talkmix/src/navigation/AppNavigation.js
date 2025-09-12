@@ -8,8 +8,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import OnBoardingScreen from '../Screens/OnBoardingScreen';
 import CadastroScreen from '../Screens/CadastroScreen';
 import LoginScreen from '../Screens/LoginScreen';
-import HomeScreen from '../Screens/HomeScreen';
-import BibliotecaScreen from '../Screens/BbliotecaScreen';
+import DashboardScreen from '../Screens/DashboardScreen';
+import BibliotecaScreen from '../Screens/BibliotecaScreen';
 
 import { getItem } from "../components/AsyncStorage";
 
@@ -43,7 +43,7 @@ export default function AppNavigation() {
           <Stack.Screen name="OnBoarding" component={OnBoardingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Biblioteca" component={BibliotecaScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
@@ -55,7 +55,7 @@ export default function AppNavigation() {
           <Stack.Screen name="OnBoarding" component={OnBoardingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Biblioteca" component={BibliotecaScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
