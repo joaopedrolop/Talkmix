@@ -13,30 +13,20 @@ export default function HomeScreen() {
 
   const handleReset = async () => {
     await removeItem('login');
-    navigation.push('Biblioteca')
+    navigation.push('Home')
   }
 
   return (
     <SafeAreaView style={styles.container}>
 
-      <View style={{
-        position: 'absolute',
-        bottom: 600,
-        left: 0,
-        width: '100%',
-        height: '40%',
-        backgroundColor: "#f9dbb2",
-        borderBottomRightRadius: 20,
-        borderBottomLeftRadius: 20
-      }}>
-        <Text style={styles.txt}>Username</Text>
+      <View>
+        <Text style={styles.txt}>Biblioteca</Text>
       </View>
 
-
-
       <TouchableOpacity onPress={handleReset} style={styles.resetButton}>
-        <Text>Ir para a Biblioteca</Text>
+        <Text>Sair</Text>
       </TouchableOpacity>
+
       <StatusBar style="auto" />
     </SafeAreaView>
   );
@@ -56,12 +46,12 @@ const styles = StyleSheet.create({
   resetButton: {
     backgroundColor: "#c7d4e2",
     padding: 10,
-    borderRadius: 10
+    borderRadius: 10,
+    marginTop: 20
   },
   txt: {
     fontSize: width * 0.09,
-    marginTop: 160,
-    marginLeft: 20,
-    color: "#832220"
+    color: "#832220",
+    justifyContent: "flex-start"
   }
 });
