@@ -8,7 +8,7 @@ import { removeItem } from '../components/AsyncStorage';
 
 const { width, height } = Dimensions.get("window")
 
-export default function HomeScreen() {
+export default function Dashboard() {
   const navigation = useNavigation()
 
   const handleReset = async () => {

@@ -8,7 +8,7 @@ import { setItem } from '../components/AsyncStorage';
 
 const { width, height } = Dimensions.get("window");
 
-export default function OnBoardingScreen() {
+export default function OnBoarding() {
   const navigation = useNavigation();
 
   const handleDone = () => {

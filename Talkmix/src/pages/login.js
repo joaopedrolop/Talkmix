@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 import { setItem } from "../components/AsyncStorage";
 
-export default function LoginScreen() {
+export default function Login() {
   const navigation = useNavigation();
 
   const [email, setEmail] = useState('');

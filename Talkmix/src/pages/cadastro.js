@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { setItem } from '../components/AsyncStorage';
 
 
-export default function CadastroScreen() {
+export default function Cadastro() {
   const navigation = useNavigation();
 
   const [nome, setNome] = useState('');
