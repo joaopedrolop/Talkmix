@@ -1,23 +1,27 @@
 //implementação das bibliotecas 
 const express = require("express");
-const mysql = require("mysql2");
+const mysql = require("mysql2/promise");
 const session = require("express-session");
 const bodyParser = require('body-parser');
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const jwt = reqire("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 const PORT = 3306;
 const app = express(); 
 
+dotenv.config();
+app.use(cors());
+app.use(express.json());
+
 //configurar a conexão com o banco de dados Mysql
-const db = mysql.createConnections({
-    host: 'localhost',
-    user: 'phpmyadmin',
-    password: '123456789' ,
-    database: 'mydb'
-});
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+})
 
 // middleware
 function autenticarToken(req, res, next) {
