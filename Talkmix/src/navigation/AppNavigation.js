@@ -5,11 +5,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Importa as páginas Pages
-import OnBoardingScreen from '../Screens/OnBoardingScreen';
-import CadastroScreen from '../Screens/CadastroScreen';
-import LoginScreen from '../Screens/LoginScreen';
-import HomeScreen from '../Screens/HomeScreen';
-import BibliotecaScreen from '../Screens/BbliotecaScreen';
+import OnBoarding from '../pages/OnBoarding';
+import Cadastro from '../pages/Cadastro';
+import Login from '../pages/Login';
+import Dashboard from '../pages/Dashboard';
+import Biblioteca from '../pages/Biblioteca';
 
 import { getItem } from "../components/AsyncStorage";
 
