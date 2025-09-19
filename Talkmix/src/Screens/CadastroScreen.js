@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Pressable } from 'react-native';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import ReactPasswordChecklist from 'react-password-checklist';
 
 import { setItem } from '../components/AsyncStorage';
-
 
 export default function CadastroScreen() {
   const navigation = useNavigation();
@@ -67,6 +67,32 @@ export default function CadastroScreen() {
   //   setEmail(value)
   // };
 
+  const validarSenha = (senha, confirmarsenha) => {
+    if (senha !== confirmarsenha) {
+      return "As senhas devem ser iguais!";
+    }
+
+    if (senha.length < 8) {
+      return "A senha deve ter pelo menos 8 carcteres!";
+    }
+
+    const temMaiuscula = /[A-Z]/.test(senha);
+    if (!temMaiuscula) {
+      return "A senha deve conter pleo menos uma letra maiúscula!";
+    }
+
+    const temNumero = /[0-9]/.test(senha);
+    if (!temNumero) {
+      return 'A senha deve conster pelo menos um número!';
+    }
+
+    const temCaracterEspecial = /["!@#%^&*(),?":{}|<>]/.test(senha);
+    if (!temCaracterEspecial) {
+      return "A senha deve conter pelo menos um caractere especial!";
+    }
+
+    return null;
+  };
 
   const Obrigatorio = async () => {
     // Verificação dos dados
@@ -89,6 +115,11 @@ export default function CadastroScreen() {
       return;
     }
 
+    if (!validarSenha(senha, confirmarsenha)) {
+      alert('Senha não foi validada!');
+      return;
+    }
+
     // if (!validarEmail(email)) {
     //   alert('Digite um E-mail valido!');
     //   return;
@@ -101,23 +132,27 @@ export default function CadastroScreen() {
   return (
     <View>
       <View style={{ width: "100%", height: "100%", backgroundColor: "#EFE6DE", padding: 40, justifyContent: 'center' }}>
-        <Text styles={styles.title}>Cadastre-se</Text>
+        <Text style={styles.title}>Cadastre-se</Text>
         <Text style={styles.text}>Tenha um Conteúdo Diversificado para comentar sobre</Text>
 
         <View style={{ marginTop: 80 }}>
-          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Nome' value={nome} onChangeText={validarNome} /> {nomeError ? <Text style={{ color: 'red' }}>{nomeError}</Text> : null}
-          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Sobrenome' value={sobrenome} onChangeText={validarSobrenome} /> {sobrenomeError ? <Text style={{ color: 'red' }}>{sobrenomeError}</Text> : null}
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Nome' value={nome} onChangeText={validarNome} />
+          {nomeError ? <Text style={{ color: 'red' }}>{nomeError}</Text> : null}
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Sobrenome' value={sobrenome} onChangeText={validarSobrenome} />
+          {sobrenomeError ? <Text style={{ color: 'red' }}>{sobrenomeError}</Text> : null}
           <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='E-mail' value={email} onChangeText={setEmail} />
-          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Senha' value={senha} onChangeText={setSenha} />
-          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Confirmar Senha' value={confirmarsenha} onChangeText={setConfimarsenha} />
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Senha' value={senha} onChangeText={setSenha} secureTextEntry />
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Confirmar Senha' value={confirmarsenha} onChangeText={setConfimarsenha} secureTextEntry />
         </View>
+
+        {senhaError ? <Text style={styles.error}>{senhaError}</Text> : null}
 
         <TouchableOpacity style={[styles.btn, { marginTop: 80, width: "100%" }]} onPress={Obrigatorio}>
           <Text style={styles.login}>Cadastre-se</Text>
         </TouchableOpacity>
 
         <View style={styles.txt}>
-          <Text Text > Já tem uma conta? </Text>
+          <Text> Já tem uma conta? </Text>
           <Pressable onPress={() => navigation.navigate("Login")}><Text style={{ fontWeight: 'bold', color: "#CC0000" }}>Faça Login!</Text></Pressable>
         </View>
 
@@ -161,5 +196,9 @@ const styles = StyleSheet.create({
   login: {
     fontStyle: 'italic',
     color: 'white'
+  },
+  error: {
+    color: "#CC0000",
+    marginBottom: 10
   }
 })
