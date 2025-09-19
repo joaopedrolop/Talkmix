@@ -1,26 +1,64 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState, useEffect } from 'react';
 
-export const setItem = async (key, value) => {
-  try {
-    await AsyncStorage.setItem(key, value)
-  } catch (error) {
-    console.log(error)
+// Importa o componente que envolverá nesta navegação
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+// Importa as páginas Pages
+import OnBoardingScreen from '../Screens/OnBoardingScreen';
+import CadastroScreen from '../Screens/CadastroScreen';
+import LoginScreen from '../Screens/LoginScreen';
+import DashboardScreen from '../Screens/DashboardScreen';
+import BibliotecaScreen from '../Screens/BibliotecaScreen';
+
+import { getItem } from "../components/AsyncStorage";
+
+const Stack = createNativeStackNavigator();
+
+export default function AppNavigation() {
+  const [showOnboarding, setShowOnboarding] = useState(null)
+
+  useEffect(() => {
+    checkIfAlreadyOnboarded();
+  }, [])
+
+  const checkIfAlreadyOnboarded = async () => {
+    let onboarded = await getItem('onboarded')
+
+    if (onboarded == "1") {
+      setShowOnboarding(false)
+    } else {
+      setShowOnboarding(true)
+    }
   }
-}
 
-export const getItem = async (key, value) => {
-  try {
-    const value = await AsyncStorage.getItem(key);
-    return value;
-  } catch (error) {
-    console.log(error)
+  if (showOnboarding === null) {
+    return null
   }
-}
 
-export const removeItem = async (key, value) => {
-  try {
-    await AsyncStorage.removeItem(key)
-  } catch (error) {
-    console.log(error)
+  if (showOnboarding) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="OnBoarding">
+          <Stack.Screen name="OnBoarding" component={OnBoardingScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Biblioteca" component={BibliotecaScreen} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    )
+  } else {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="OnBoarding">
+          <Stack.Screen name="OnBoarding" component={OnBoardingScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Biblioteca" component={BibliotecaScreen} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    )
   }
 }

@@ -9,7 +9,7 @@ import OnBoarding from '../pages/OnBoarding';
 import Cadastro from '../pages/Cadastro';
 import Login from '../pages/Login';
 import Dashboard from '../pages/Dashboard';
-import Biblioteca from '../pages/Biblioteca';
+import Biblioteca from '../pages/BibliotecaScreen';
 
 import { getItem } from "../components/AsyncStorage";
 

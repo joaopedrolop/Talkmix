@@ -8,7 +8,7 @@ import { setItem } from '../components/AsyncStorage';
 
 const { width, height } = Dimensions.get("window");
 
-export default function OnBoarding() {
+export default function OnBoardingScreen() {
   const navigation = useNavigation();
 
   const handleDone = () => {
@@ -18,12 +18,11 @@ export default function OnBoarding() {
 
   const doneButton = ({ ...props }) => {
     return (
-      <TouchableOpacity style={styles.doneButton} {...props}>
+      <TouchableOpacity onPress={handleDone} style={styles.doneButton} {...props}>
         <Text>Done</Text>
       </TouchableOpacity>
     )
   }
-
   return (
     <View style={styles.container}>
       <Onboarding
