@@ -71,6 +71,37 @@ app.post("/auth/register", async (req, res) => {
     }
 });
 
+// Rota para o login
+app.post("/auth/login", async (req, res) => {
+    try{
+        const {email, senha } = req.body
+
+        const [rows] = await pool.query("SELECT * FROM  users WHERE email = ?", [
+            email,
+        ]);
+        if (rows.length === 0) {
+            return res.status(400).json({ error: "Usuario não cadastrado"})
+        }
+
+        const usuario = rows[0];
+
+        const senhaValida = await bcrypt.compare(senha, usuario.senha);
+         if (!senhaValida) {
+            return res.status(401).json({ error: "Senha incorreta"})
+         }
+
+         const token = jwt.sign(
+            {id: usuario.id, email: usuario.email },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h"}
+         )
+         res.json({ message: "Login bem sucedido", token})
+    }catch{
+        console.log(error)
+        res.status(500).json({ error: "Erro ao fazer login"})
+    }
+})
+
 async function conexaoBd() {
     try {
         const conn = await pool.getConnection();
