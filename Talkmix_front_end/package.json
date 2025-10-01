@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "body-parser": "^2.2.0",
-    "express-session": "^1.18.2"
-   
-    
-    
-  }
-}
