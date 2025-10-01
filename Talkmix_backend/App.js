@@ -8,7 +8,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 
-const PORT = 8000;
+const PORT = 3306;
 const app = express();
 
 dotenv.config();
