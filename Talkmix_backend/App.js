@@ -29,7 +29,7 @@ function autenticarToken(req, res, next) {
   const token = autHeader && autHeader.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ error: "token nãofornecido" });
+    return res.status(401).json({ error: "Token não fornecido" });
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
@@ -51,10 +51,9 @@ app.post("/auth/register", async (req, res) => {
       return res.status(400).json({ error: "preencha todos os campos" });
     }
 
-    const [rows] = await createPool.query(
-      "SELECT id FROM users WHERE email = ?",
-      [email]
-    );
+    const [rows] = await pool.query("SELECT id FROM users WHERE email = ?", [
+      email,
+    ]);
     if (rows.length > 0) {
       return res.status(400).json({ error: "Email já cadastrado" });
     }
@@ -101,6 +100,25 @@ app.post("/auth/login", async (req, res) => {
   } catch {
     console.log(error);
     res.status(500).json({ error: "Erro ao fazer login" });
+  }
+});
+
+// rota perfil
+app.get("/auth/profile", autenticarToken, async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      "SELECT nome, email FROM users WHERE id = ?",
+      [req.user.id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Usuario não encontrado." });
+    }
+
+    res.json({ user: rows[0] });
+  } catch {
+    console.log(error);
+    res.status(500).json({ error: " Erro ao buscar dados do Usuário" });
   }
 });
 
