@@ -20,6 +20,7 @@ export default function CadastroScreen() {
   const [emailError, setEmailError] = useState('');
   const [senhaError, setSenhaError] = useState('');
   const [confirmarsenhaError, setConfirmarsenhaError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const validarNome = (value) => {
     const regex = /^[A-Za-zÀ-ÿ\s]+$/;
@@ -105,6 +106,29 @@ export default function CadastroScreen() {
       return;
     }
 
+    setLoading(true);
+
+    try {
+      const res = await axios.post("http://172.20.10.2:8000/auth/register", {
+        nome,
+        sobrenome,
+        email,
+        senha,
+      });
+
+      alert("Sucesso", res.data.message);
+      setNome("");
+      setSobrenome("");
+      setEmail("");
+      setSenha("");
+      setConfirmarSenha("");
+    } catch (error) {
+      console.log("ERRO:", error);
+    } finally {
+      setLoading(false);
+    }
+
+
     if (!validarNome(nome)) {
       alert('O nome não pode conter números ou caracteres especiais!');
       return;
@@ -147,8 +171,12 @@ export default function CadastroScreen() {
 
         {senhaError ? <Text style={styles.error}>{senhaError}</Text> : null}
 
-        <TouchableOpacity style={[styles.btn, { marginTop: 80, width: "100%" }]} onPress={Obrigatorio}>
-          <Text style={styles.login}>Cadastre-se</Text>
+        <TouchableOpacity
+          style={[styles.btn, { marginTop: 80, width: "100%" }]}
+          onPress={Obrigatorio}
+          disabled={loading}
+        >
+          <Text style={styles.login}>{loading ? "Cadastrando..." : "Cadastrar"}</Text>
         </TouchableOpacity>
 
         <View style={styles.txt}>

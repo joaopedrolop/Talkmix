@@ -1,47 +1,45 @@
-import { StatusBar } from "react-native";
-import { StyleSheet, Pressable, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
 
-import { setItem } from "../components/AsyncStorage";
+import { setItem } from '../components/AsyncStorage';
 
-export default function LoginScreen() {
+export default function EsqueceuSenhaScreen() {
   const navigation = useNavigation();
 
-  const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [confirmarsenha, setConfimarsenha] = useState('');
 
   const Obrigatorio = async () => {
-    if (email.trim() === '' || senha.trim() === '') {
+    if (senha.trim() === '') {
       alert('Este campo é obrigatório preencha-o para continuar!');
       return;
     }
+
     await setItem('login', 'logada')
-    navigation.navigate("Dashboard")
+    navigation.navigate("Login")
   };
 
   return (
     <View>
       <View style={{ width: "100%", height: "100%", backgroundColor: "#EFE6DE", padding: 40, justifyContent: 'center' }}>
-        <Text styles={styles.title}>Login</Text>
+        <Text style={styles.title}>Esqueceu a Senha?</Text>
+        <Text style={styles.text}>Coloque uma nova aqui!</Text>
 
         <View style={{ marginTop: 80 }}>
-          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='E-mail' value={email} onChangeText={setEmail} />
-          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Senha' value={senha} onChangeText={setSenha} />
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Senha' value={senha} onChangeText={setSenha} secureTextEntry />
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Confirmar Senha' value={confirmarsenha} onChangeText={setConfimarsenha} secureTextEntry />
         </View>
 
         <TouchableOpacity style={[styles.btn, { marginTop: 80, width: "100%" }]} onPress={Obrigatorio}>
-          <Text style={styles.login}>Logue-se</Text>
+          <Text style={styles.login}>Mudar Senha</Text>
         </TouchableOpacity>
-
-        <View style={styles.txt}>
-          <Pressable onPress={() => navigation.navigate("EsqueceuSenha")}><Text style={{ fontWeight: 'bold', color: "#CC0000" }}>Esqueceu a Senha?</Text></Pressable>
-        </View>
 
       </View>
       <StatusBar hidden />
-    </View >
+    </View>
   );
 }
 
@@ -50,6 +48,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 5,
+    color: "#CC0000"
+  },
+  text: {
     color: "#CC0000"
   },
   input: {
@@ -76,5 +77,9 @@ const styles = StyleSheet.create({
   login: {
     fontStyle: 'italic',
     color: 'white'
+  },
+  error: {
+    color: "#CC0000",
+    marginBottom: 10
   }
 })
