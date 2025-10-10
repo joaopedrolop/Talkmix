@@ -47,6 +47,8 @@ app.post("/auth/register", async (req, res) => {
   try {
     const { nome, sobrenome, email, senha } = req.body;
 
+    console.log(nome, sobrenome);
+
     if (!nome || !sobrenome || !email || !senha) {
       return res.status(400).json({ error: "preencha todos os campos" });
     }
