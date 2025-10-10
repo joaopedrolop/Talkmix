@@ -3,10 +3,11 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-nati
 
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ProgressChart, BarChart } from 'react-native-chart-kit';
 
 import { removeItem } from '../components/AsyncStorage';
 
-const { width, height } = Dimensions.get("window")
+const { width, height, } = Dimensions.get("window")
 
 export default function DashboardScreen() {
   const navigation = useNavigation()
@@ -20,6 +21,14 @@ export default function DashboardScreen() {
     await removeItem('login');
     navigation.push('Login')
   }
+
+  const chartConfig = {
+    backgroundGradientFrom: '#1E2923',
+    backgroundGradientTo: '#08130D',
+    color: (opacidade = 1) => `rgba(26, 255, 146, ${opacidade} )`
+  }
+
+  const data = [0.4, 0.6, 0.8]
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,6 +45,12 @@ export default function DashboardScreen() {
         <Text style={styles.txt}>Username</Text>
       </View>
 
+      <ProgressChart
+        data={data}
+        width={screenWidth}
+        heigth={220}
+        chartConfig={chartConfig}
+      />
 
       <TouchableOpacity onPress={handleReset} style={styles.resetButton}>
         <Text>Ir para a Biblioteca</Text>
@@ -55,7 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#EFE6DE',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   text: {
     fontSize: width * 0.09,
@@ -66,7 +81,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginBottom: 10,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   txt: {
     fontSize: width * 0.09,

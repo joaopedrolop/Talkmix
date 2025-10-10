@@ -1,34 +1,25 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Pressable } from 'react-native';
 
-import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import ReactPasswordChecklist from "react-password-checklist";
+import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import ReactPasswordChecklist from 'react-password-checklist';
 
-import axios from "axios";
-
-import { setItem } from "../components/AsyncStorage";
+import { setItem } from '../components/AsyncStorage';
 
 export default function CadastroScreen() {
   const navigation = useNavigation();
 
-  const [nome, setNome] = useState("");
-  const [sobrenome, setSobrenome] = useState("");
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [confirmarsenha, setConfirmarSenha] = useState("");
-  const [nomeError, setNomeError] = useState("");
-  const [sobrenomeError, setSobrenomeError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [senhaError, setSenhaError] = useState("");
-  const [confirmarsenhaError, setConfirmarsenhaError] = useState("");
+  const [nome, setNome] = useState('');
+  const [sobrenome, setSobrenome] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [confirmarsenha, setConfimarsenha] = useState('');
+  const [nomeError, setNomeError] = useState('');
+  const [sobrenomeError, setSobrenomeError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [senhaError, setSenhaError] = useState('');
+  const [confirmarsenhaError, setConfirmarsenhaError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const validarNome = (value) => {
@@ -38,25 +29,25 @@ export default function CadastroScreen() {
       setNomeError("O nome não pode conter números ou caracteres especiais!");
       return false;
     } else {
-      setNomeError("");
+      setNomeError('');
       setNome(value);
       return true;
     }
+
   };
 
   const validarSobrenome = (value) => {
     const regex = /^[A-Za-zÀ-ÿ\s]+$/;
 
     if (!regex.test(value)) {
-      setSobrenomeError(
-        "O sobrenome não pode conter números ou caracteres especiais!"
-      );
-      return false;
+      setSobrenomeError("O sobrenome não pode conter números ou caracteres especiais!")
+      return false
     } else {
-      setSobrenomeError("");
+      setSobrenomeError('');
       setSobrenome(value);
-      return true;
+      return true
     }
+
   };
 
   // const validarEmail = (value) => {
@@ -93,7 +84,7 @@ export default function CadastroScreen() {
 
     const temNumero = /[0-9]/.test(senha);
     if (!temNumero) {
-      return "A senha deve conster pelo menos um número!";
+      return 'A senha deve conster pelo menos um número!';
     }
 
     const temCaracterEspecial = /["!@#%^&*(),?":{}|<>]/.test(senha);
@@ -106,21 +97,19 @@ export default function CadastroScreen() {
 
   const Obrigatorio = async () => {
     // Verificação dos dados
-    if (
-      nome.trim() === "" ||
-      sobrenome.trim() === "" ||
-      email.trim() === "" ||
-      senha.trim() === "" ||
-      confirmarsenha.trim() === ""
-    ) {
-      alert("Este campo é obrigatório preencha-o para continuar!");
+    if (nome.trim() === '' ||
+      sobrenome.trim() === '' ||
+      email.trim() === '' ||
+      senha.trim() === '' ||
+      confirmarsenha.trim() === '') {
+      alert('Este campo é obrigatório preencha-o para continuar!');
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await axios.post("http://10.144.170.45:8000/auth/register", {
+      const res = await axios.post("http://172.20.10.2:8000/auth/register", {
         nome,
         sobrenome,
         email,
@@ -139,18 +128,19 @@ export default function CadastroScreen() {
       setLoading(false);
     }
 
+
     if (!validarNome(nome)) {
-      alert("O nome não pode conter números ou caracteres especiais!");
+      alert('O nome não pode conter números ou caracteres especiais!');
       return;
     }
 
     if (!validarSobrenome(sobrenome)) {
-      alert("O sobrenome não pode conter números ou caracteres especiais!");
+      alert('O sobrenome não pode conter números ou caracteres especiais!');
       return;
     }
 
     if (!validarSenha(senha, confirmarsenha)) {
-      alert("Senha não foi validada!");
+      alert('Senha não foi validada!');
       return;
     }
 
@@ -159,91 +149,44 @@ export default function CadastroScreen() {
     //   return;
     // }
 
-    await setItem("login", "logada");
-    navigation.navigate("Login");
+    await setItem('login', 'logada')
+    navigation.navigate("Login")
   };
 
   return (
-    <View
-      style={{
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#EFE6DE",
-        padding: 40,
-        justifyContent: "center",
-      }}
-    >
-      <Text style={styles.title}>Cadastre-se</Text>
-      <Text style={styles.text}>
-        Tenha um Conteúdo Diversificado para comentar sobre
-      </Text>
+    <View>
+      <View style={{ width: "100%", height: "100%", backgroundColor: "#EFE6DE", padding: 40, justifyContent: 'center' }}>
+        <Text style={styles.title}>Cadastre-se</Text>
+        <Text style={styles.text}>Tenha um Conteúdo Diversificado para comentar sobre</Text>
 
-      <View style={{ marginTop: 80 }}>
-        <TextInput
-          style={styles.input}
-          placeholderTextColor={"#CC0000"}
-          placeholder="Nome"
-          value={nome}
-          onChangeText={validarNome}
-        />
-        {nomeError ? <Text style={{ color: "red" }}>{nomeError}</Text> : null}
-        <TextInput
-          style={styles.input}
-          placeholderTextColor={"#CC0000"}
-          placeholder="Sobrenome"
-          value={sobrenome}
-          onChangeText={validarSobrenome}
-        />
-        {sobrenomeError ? (
-          <Text style={{ color: "red" }}>{sobrenomeError}</Text>
-        ) : null}
-        <TextInput
-          style={styles.input}
-          placeholderTextColor={"#CC0000"}
-          placeholder="E-mail"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor={"#CC0000"}
-          placeholder="Senha"
-          value={senha}
-          onChangeText={setSenha}
-          secureTextEntry
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor={"#CC0000"}
-          placeholder="Confirmar Senha"
-          value={confirmarsenha}
-          onChangeText={setConfirmarSenha}
-          secureTextEntry
-        />
-      </View>
+        <View style={{ marginTop: 80 }}>
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Nome' value={nome} onChangeText={validarNome} />
+          {nomeError ? <Text style={{ color: 'red' }}>{nomeError}</Text> : null}
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Sobrenome' value={sobrenome} onChangeText={validarSobrenome} />
+          {sobrenomeError ? <Text style={{ color: 'red' }}>{sobrenomeError}</Text> : null}
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='E-mail' value={email} onChangeText={setEmail} />
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Senha' value={senha} onChangeText={setSenha} secureTextEntry />
+          <TextInput style={styles.input} placeholderTextColor={"#CC0000"} placeholder='Confirmar Senha' value={confirmarsenha} onChangeText={setConfimarsenha} secureTextEntry />
+        </View>
 
-      {senhaError ? <Text style={styles.error}>{senhaError}</Text> : null}
+        {senhaError ? <Text style={styles.error}>{senhaError}</Text> : null}
 
-      <TouchableOpacity
-        style={[styles.btn, { marginTop: 80, width: "100%" }]}
-        onPress={Obrigatorio}
-        disabled={loading}
-      >
-        <Text style={styles.login}>
-          {loading ? "Cadastrando..." : "Cadastrar"}
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.btn, { marginTop: 80, width: "100%" }]}
+          onPress={Obrigatorio}
+          disabled={loading}
+        >
+          <Text style={styles.login}>{loading ? "Cadastrando..." : "Cadastrar"}</Text>
+        </TouchableOpacity>
 
-      <View style={styles.txt}>
-        <Text> Já tem uma conta? </Text>
-        <Pressable onPress={() => navigation.navigate("Login")}>
-          <Text style={{ fontWeight: "bold", color: "#CC0000" }}>
-            Faça Login!
-          </Text>
-        </Pressable>
+        <View style={styles.txt}>
+          <Text> Já tem uma conta? </Text>
+          <Pressable onPress={() => navigation.navigate("Login")}><Text style={{ fontWeight: 'bold', color: "#CC0000" }}>Faça Login!</Text></Pressable>
+        </View>
+
       </View>
       <StatusBar hidden />
-    </View>
+    </View >
   );
 }
 
@@ -252,20 +195,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 5,
-    color: "#CC0000",
+    color: "#CC0000"
   },
   text: {
-    color: "#CC0000",
+    color: "#CC0000"
   },
   input: {
     borderBottomWidth: 1,
     borderBottomColor: "#CC0000",
     paddingLeft: 7,
-    padding: 15,
+    padding: 15
   },
   txt: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   btn: {
     backgroundColor: "#CC0000",
@@ -275,15 +218,15 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.25,
     elevation: 5,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   login: {
-    fontStyle: "italic",
-    color: "white",
+    fontStyle: 'italic',
+    color: 'white'
   },
   error: {
     color: "#CC0000",
-    marginBottom: 10,
-  },
-});
+    marginBottom: 10
+  }
+})

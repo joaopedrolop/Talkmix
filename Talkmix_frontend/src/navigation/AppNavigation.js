@@ -8,6 +8,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import OnBoardingScreen from '../Screens/OnBoardingScreen';
 import CadastroScreen from '../Screens/CadastroScreen';
 import LoginScreen from '../Screens/LoginScreen';
+import EsqueceuSenhaScreen from '../Screens/EsqueceuSenhaScreen';
 import DashboardScreen from '../Screens/DashboardScreen';
 import BibliotecaScreen from '../Screens/BibliotecaScreen';
 
@@ -43,6 +44,7 @@ export default function AppNavigation() {
           <Stack.Screen name="OnBoarding" component={OnBoardingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="EsqueceuSenha" component={EsqueceuSenhaScreen} options={{ header: false }} />
           <Stack.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Biblioteca" component={BibliotecaScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
@@ -55,6 +57,7 @@ export default function AppNavigation() {
           <Stack.Screen name="OnBoarding" component={OnBoardingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="EsqueceuSenha" component={EsqueceuSenhaScreen} options={{ header: false }} />
           <Stack.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Biblioteca" component={BibliotecaScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
