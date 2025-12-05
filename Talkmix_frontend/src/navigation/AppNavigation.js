@@ -11,6 +11,7 @@ import LoginScreen from '../Screens/LoginScreen';
 import EsqueceuSenhaScreen from '../Screens/EsqueceuSenhaScreen';
 import DashboardScreen from '../Screens/DashboardScreen';
 import BibliotecaScreen from '../Screens/BibliotecaScreen';
+import Grafico from '../Screens/Grafico';
 
 import { getItem } from "../components/AsyncStorage";
 
@@ -47,6 +48,7 @@ export default function AppNavigation() {
           <Stack.Screen name="EsqueceuSenha" component={EsqueceuSenhaScreen} options={{ header: false }} />
           <Stack.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Biblioteca" component={BibliotecaScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Grafico" component={Grafico} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     )
@@ -60,6 +62,7 @@ export default function AppNavigation() {
           <Stack.Screen name="EsqueceuSenha" component={EsqueceuSenhaScreen} options={{ header: false }} />
           <Stack.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Biblioteca" component={BibliotecaScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Grafico" component={Grafico} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     )

@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-nati
 
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ProgressChart, BarChart } from 'react-native-chart-kit';
 
 import { removeItem } from '../components/AsyncStorage';
 
@@ -22,10 +21,9 @@ export default function DashboardScreen() {
     navigation.push('Login')
   }
 
-  const chartConfig = {
-    backgroundGradientFrom: '#1E2923',
-    backgroundGradientTo: '#08130D',
-    color: (opacidade = 1) => `rgba(26, 255, 146, ${opacidade} )`
+  const handleReset3 = async () => {
+    await removeItem('login');
+    navigation.push('Grafico')
   }
 
   const data = [0.4, 0.6, 0.8]
@@ -45,15 +43,12 @@ export default function DashboardScreen() {
         <Text style={styles.txt}>Username</Text>
       </View>
 
-      <ProgressChart
-        data={data}
-        width={screenWidth}
-        heigth={220}
-        chartConfig={chartConfig}
-      />
-
       <TouchableOpacity onPress={handleReset} style={styles.resetButton}>
         <Text>Ir para a Biblioteca</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={handleReset3} style={styles.resetButton}>
+        <Text>Ir para o Gráfico</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={handleReset2} style={styles.resetButton}>

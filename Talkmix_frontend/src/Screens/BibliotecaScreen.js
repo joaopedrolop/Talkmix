@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
-
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -14,6 +13,14 @@ export default function BibliotecaScreen() {
   const handleReset = async () => {
     await removeItem('login');
     navigation.push('Dashboard')
+  }
+
+  const fetchData = () => {
+    try {
+      const response = axios.get("http://localhost:8000/")
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
