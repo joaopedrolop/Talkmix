@@ -25,19 +25,19 @@ const pool = mysql.createPool({
 
 // middleware
 function autenticarToken(req, res, next) {
-  const autHeader = req.heders["authorization"];
+  const autHeader = req.header("Authorization");
   const token = autHeader && autHeader.split(" ")[1];
 
   if (!token) {
     return res.status(401).json({ error: "Token não fornecido" });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
+  jwt.verify(token, process.env.JWT_SECRET, (error, usuario) => {
     if (error) {
       return res.status(403).json({ error: "Token invalido" });
     }
 
-    req.user = user;
+    req.usuario = usuario;
     next();
   });
 }
@@ -45,26 +45,26 @@ function autenticarToken(req, res, next) {
 //Rota para o registro
 app.post("/auth/register", async (req, res) => {
   try {
-    const { nome, sobrenome, email, senha } = req.body;
+    const { Nome, Sobrenome, Email, Senha } = req.body;
 
-    console.log(nome, sobrenome);
+    console.log(Nome, Sobrenome);
 
-    if (!nome || !sobrenome || !email || !senha) {
-      return res.status(400).json({ error: "preencha todos os campos" });
+    if (!Nome || !Sobrenome || !Email || !Senha) {
+      return res.status(400).json({ error: "Preencha todos os campos" });
     }
 
-    const [rows] = await pool.query("SELECT id FROM users WHERE email = ?", [
-      email,
+    const [rows] = await pool.query("SELECT ID FROM usuario WHERE Email = ?", [
+      Email,
     ]);
     if (rows.length > 0) {
       return res.status(400).json({ error: "Email já cadastrado" });
     }
 
-    const senha_hash = await bcrypt.hash(senha, 10);
+    const senha_hash = await bcrypt.hash(Senha, 10);
 
     await pool.query(
-      "INSERT INTO users (nome, sobrenome, email, senha) VALUE (?, ?, ?, ?)",
-      [nome, sobrenome, email, senha_hash]
+      "INSERT INTO usuario (Nome, Sobrenome, Email, Senha) VALUE (?, ?, ?, ?)",
+      [Nome, Sobrenome, Email, senha_hash]
     );
 
     res.status(201).json({ message: "Usuario criado co sucesso" });
@@ -77,10 +77,10 @@ app.post("/auth/register", async (req, res) => {
 // Rota para o login
 app.post("/auth/login", async (req, res) => {
   try {
-    const { email, senha } = req.body;
+    const { Email, Senha } = req.body;
 
-    const [rows] = await pool.query("SELECT * FROM  users WHERE email = ?", [
-      email,
+    const [rows] = await pool.query("SELECT * FROM  usuario WHERE Email = ?", [
+      Email,
     ]);
     if (rows.length === 0) {
       return res.status(400).json({ error: "Usuario não cadastrado" });
@@ -88,13 +88,13 @@ app.post("/auth/login", async (req, res) => {
 
     const usuario = rows[0];
 
-    const senhaValida = await bcrypt.compare(senha, usuario.senha);
+    const senhaValida = await bcrypt.compare(Senha, usuario.Senha);
     if (!senhaValida) {
       return res.status(401).json({ error: "Senha incorreta" });
     }
 
     const token = jwt.sign(
-      { id: usuario.id, email: usuario.email },
+      { ID: usuario.ID, Email: usuario.Email },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
@@ -109,15 +109,15 @@ app.post("/auth/login", async (req, res) => {
 app.get("/auth/profile", autenticarToken, async (req, res) => {
   try {
     const [rows] = await pool.query(
-      "SELECT nome, email FROM users WHERE id = ?",
-      [req.user.id]
+      "SELECT Nome, Email FROM usuario WHERE ID = ?",
+      [req.usuario.ID]
     );
 
     if (rows.length === 0) {
       return res.status(404).json({ error: "Usuario não encontrado." });
     }
 
-    res.json({ user: rows[0] });
+    res.json({ usuario: rows[0] });
   } catch {
     console.log(error);
     res.status(500).json({ error: " Erro ao buscar dados do Usuário" });
@@ -133,6 +133,40 @@ async function conexaoBd() {
     console.log(`Error: ${error}`);
   }
 }
+
+app.get("/auth/library", autenticarToken, async (req, res) => {
+  try {
+    const [rows] = await pool.query("SELECT Titulo FROM livros");
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Livro não encontardo" });
+    }
+
+    res.json({ livro: rows });
+  } catch {
+    // console.log(error);
+    res.status(500).json({ error: " Erro ao buscar dados do Livro" });
+  }
+});
+
+//Rota para vizualizar os livros
+app.get("/auth/book", autenticarToken, async (req, res) => {
+  console.log("GET /auth/book");
+  try {
+    const [rows] = await pool.query("SELECT * FROM livros WHERE ID = ?", [
+      req.body.ID,
+    ]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "livro não encontrado." });
+    }
+
+    res.json({ livros: rows });
+  } catch {
+    // console.log(error);
+    res.status(500).json({ error: " Erro ao buscar dados do livro" });
+  }
+});
 
 conexaoBd();
 
